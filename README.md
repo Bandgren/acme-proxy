@@ -1,11 +1,19 @@
 # acme-proxy
 
+**THE BEER-WARE LICENSE**
+
+Bandgren wrote this file. As long as you retain this notice you can do whatever you want with this stuff. If we meet some day, and you think this stuff is worth it, you can buy me a beer in return.
+
+License originally authored by Poul-Henning Kamp (phk).
+
 ## Run acme-proxy
 ``` 
 go run main.go -p X
 ```
 Where `X` defaults to port 8080.
-##Test it out
+
+## Test it out
+
 The `/test` endpoint proxies the request towards `https://postman-echo.com/headers`
 ```
 curl http://localhost:8080/test 
@@ -38,3 +46,4 @@ And you will get the following JSON response
 * Possible tests
     * Since the only "business" logic in this case is to append the `key` header this could be tested for.
     But since we are using well maintained std lib code that is thoroughly tested adding more "same" tests Would be abit redundant. 
+    
