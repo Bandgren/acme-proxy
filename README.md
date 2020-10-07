@@ -6,11 +6,10 @@ Bandgren wrote this file. As long as you retain this notice you can do whatever 
 
 License originally authored by Poul-Henning Kamp (phk).
 
-## Run acme-proxy
+## Build and Run acme-proxy
 ``` 
-go run main.go -p X
+ go build && ./acme-proxy -p 8080
 ```
-Where `X` defaults to port 8080.
 
 ## Test it out
 
@@ -37,13 +36,32 @@ And you will get the following JSON response
 }
 ```
 
+## Run tests
+```
+go test ./...
+```
+Example output
+``` 
+?       acme-proxy      [no test files]
+?       acme-proxy/internal/config      [no test files]
+ok      acme-proxy/internal/proxy       2.498s
+```
+
+## Run benchmark
+```
+go test ./... -bench=.
+```
+Example output
+```
+goos: linux
+goarch: amd64
+pkg: acme-proxy/internal/proxy
+BenchmarkProxy-8   	      69	  16696905 ns/op
+```
+
 ## Things to think about:
 * How to protect the key?
     * Depending on the domain, if running inside kubernetes, as a kube secret, otherwise a HMAC or OAuth solution.
 * Limitations
     * Currently, only supports one endpoint to proxy match.
-    * Using standard go std lib reverseProxy. Maybe not super flexible for future special business cases.
-* Possible tests
-    * Since the only "business" logic in this case is to append the `key` header this could be tested for.
-    But since we are using well maintained std lib code that is thoroughly tested adding more "same" tests Would be abit redundant. 
-    
+    * Dose not support trailer, stream or HTTP/2
